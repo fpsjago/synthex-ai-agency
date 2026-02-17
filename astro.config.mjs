@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://fpsjago.github.io',
-  base: '/synthex-ai-agency',
+  base: '/synthex-ai-agency/',
   integrations: [
     react(),
     sitemap(),
