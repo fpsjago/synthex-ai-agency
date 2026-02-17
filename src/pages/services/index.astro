@@ -1,0 +1,345 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader/SectionHeader.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const services = await getCollection('services');
+const sorted = services.sort((a, b) => a.data.order - b.data.order);
+
+const processSteps = [
+  {
+    number: '01',
+    title: 'Discovery & Audit',
+    description: 'We spend 2 weeks embedded with your team, mapping every workflow and identifying automation opportunities ranked by ROI potential.',
+  },
+  {
+    number: '02',
+    title: 'Architecture Design',
+    description: 'We design a scalable system architecture tailored to your stack, with a full technical spec and implementation roadmap.',
+  },
+  {
+    number: '03',
+    title: 'Build & Iterate',
+    description: 'Weekly sprints with constant communication. You see working demos every 7 days, not just status updates.',
+  },
+  {
+    number: '04',
+    title: 'Deploy & Monitor',
+    description: 'Production deployment with monitoring dashboards, alerting, and a 90-day hypercare period to optimize performance.',
+  },
+];
+---
+
+<BaseLayout
+  title="Services"
+  description="AI automation, LLM integration, data pipelines, and strategy consulting. Synthex builds AI systems that transform your business operations."
+>
+  <!-- Hero -->
+  <section class="section services-hero">
+    <div class="container">
+      <div class="services-hero-content">
+        <span class="label text-cyan js-reveal" data-reveal="fade-up">Our Services</span>
+        <h1 class="display-2 js-reveal" data-reveal="fade-up" data-delay="0.1">
+          AI capabilities built<br />
+          <em class="services-hero-em">for production</em>
+        </h1>
+        <p class="body-lg text-muted js-reveal" data-reveal="fade-up" data-delay="0.2">
+          We don't build demos. Every engagement produces a production-ready system with measurable ROI, clear ownership, and ongoing support.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Detail -->
+  <section class="section">
+    <div class="container">
+      <div class="services-detail-grid">
+        {sorted.map((service, i) => (
+          <article
+            class={`service-detail-card js-reveal ${i % 2 === 1 ? 'service-detail-card--alt' : ''}`}
+            data-reveal="fade-up"
+            data-delay={String(i * 0.08)}
+          >
+            <div class="service-detail-header">
+              <span class="service-detail-icon">{service.data.icon}</span>
+              <div>
+                <div class="service-detail-tags">
+                  {service.data.tags.slice(0, 3).map((tag: string) => (
+                    <span class="service-tag label">{tag}</span>
+                  ))}
+                </div>
+                <h2 class="service-detail-title heading-xl">{service.data.title}</h2>
+              </div>
+            </div>
+            <p class="service-detail-desc body-lg text-muted">{service.data.description}</p>
+            <a href={`${base}contact/`} class="btn btn-secondary service-detail-cta">
+              Start this service
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section process-section">
+    <div class="container">
+      <SectionHeader
+        label="How We Work"
+        title="Our proven process"
+        subtitle="Eight years of AI deployments distilled into a methodology that consistently delivers."
+        accentWord="proven process"
+      />
+
+      <div class="process-grid">
+        {processSteps.map((step, i) => (
+          <div class="process-step js-reveal" data-reveal="fade-up" data-delay={String(i * 0.1)}>
+            <span class="process-number">{step.number}</span>
+            <h3 class="process-title heading-md">{step.title}</h3>
+            <p class="process-desc body-sm text-muted">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="services-bottom-cta js-reveal" data-reveal="fade-up">
+        <div>
+          <h2 class="heading-xl">Not sure where to start?</h2>
+          <p class="body-lg text-muted">Book a free 45-minute strategy call. We'll assess your AI readiness and identify your highest-leverage opportunities.</p>
+        </div>
+        <a href={`${base}contact/`} class="btn btn-primary" data-magnetic>
+          Book free strategy call
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .services-hero {
+    padding-top: calc(var(--nav-height) + var(--space-4xl));
+    background: var(--color-bg);
+  }
+
+  .services-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: 700px;
+  }
+
+  .services-hero-em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Detail Grid */
+  .services-detail-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .service-detail-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-2xl);
+    align-items: center;
+    padding: var(--space-2xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .service-detail-card:hover {
+    border-color: var(--color-cyan-border);
+    box-shadow: var(--shadow-cyan);
+  }
+
+  .service-detail-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-lg);
+    grid-column: 1;
+  }
+
+  .service-detail-icon {
+    font-size: 3rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .service-detail-tags {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-sm);
+  }
+
+  .service-tag {
+    padding: 0.2rem 0.5rem;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text-tertiary);
+    font-size: 0.65rem;
+  }
+
+  .service-detail-title {
+    color: var(--color-text-primary);
+  }
+
+  .service-detail-desc {
+    grid-column: 2;
+    max-width: 55ch;
+  }
+
+  .service-detail-cta {
+    grid-column: 3;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Process */
+  .process-section {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+    position: relative;
+  }
+
+  .process-grid::before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    left: calc(12.5% + 1.5rem);
+    right: calc(12.5% + 1.5rem);
+    height: 1px;
+    background: linear-gradient(to right, var(--color-cyan), transparent, var(--color-green));
+    opacity: 0.4;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    position: relative;
+  }
+
+  .process-number {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-cyan);
+    background: var(--color-cyan-dim);
+    border: 1px solid var(--color-cyan-border);
+    border-radius: var(--radius-full);
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Bottom CTA */
+  .services-bottom-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-3xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+  }
+
+  @media (max-width: 1024px) {
+    .service-detail-card {
+      grid-template-columns: 1fr;
+    }
+
+    .service-detail-header {
+      grid-column: 1;
+    }
+
+    .service-detail-desc {
+      grid-column: 1;
+    }
+
+    .service-detail-cta {
+      grid-column: 1;
+    }
+
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-grid::before {
+      display: none;
+    }
+
+    .services-bottom-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initReveal() {
+    const reveals = document.querySelectorAll<HTMLElement>('.js-reveal');
+    reveals.forEach((el) => {
+      const delay = parseFloat(el.dataset.delay || '0');
+      gsap.fromTo(el,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          }
+        }
+      );
+    });
+  }
+
+  initReveal();
+  document.addEventListener('astro:after-swap', initReveal);
+</script>

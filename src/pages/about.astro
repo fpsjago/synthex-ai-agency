@@ -1,0 +1,323 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader/SectionHeader.astro';
+import TeamCard from '../components/TeamCard/TeamCard.astro';
+import Timeline from '../components/Timeline/Timeline.astro';
+import StatsCounter from '../components/StatsCounter/StatsCounter.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const team = [
+  {
+    name: 'Alex Chen',
+    role: 'Co-founder & CEO',
+    bio: 'Former ML lead at Google DeepMind. Built production AI systems for 200M+ users. Obsessed with the gap between AI research and real-world deployment.',
+    initial: 'AC',
+    color: 'cyan' as const,
+    twitterUrl: 'https://twitter.com',
+    linkedinUrl: 'https://linkedin.com',
+  },
+  {
+    name: 'Sarah Kim',
+    role: 'Co-founder & CTO',
+    bio: 'Ex-staff engineer at Stripe. Built data infrastructure processing $50B in transactions. Now applying that rigor to AI systems that actually work at scale.',
+    initial: 'SK',
+    color: 'green' as const,
+    twitterUrl: 'https://twitter.com',
+    linkedinUrl: 'https://linkedin.com',
+  },
+  {
+    name: 'Marcus Thompson',
+    role: 'Head of Engineering',
+    bio: 'Previously led AI platform at a Series D SaaS company. Expert in LLM orchestration, RAG architecture, and making complex systems reliably simple.',
+    initial: 'MT',
+    color: 'cyan' as const,
+    linkedinUrl: 'https://linkedin.com',
+  },
+  {
+    name: 'Priya Patel',
+    role: 'Head of Strategy',
+    bio: 'McKinsey alumna turned AI strategist. Helps executive teams move from "interested in AI" to "deploying AI" with a clear ROI roadmap.',
+    initial: 'PP',
+    color: 'green' as const,
+    twitterUrl: 'https://twitter.com',
+    linkedinUrl: 'https://linkedin.com',
+  },
+];
+
+const values = [
+  {
+    icon: '🎯',
+    title: 'Outcomes over impressiveness',
+    description: "We measure success in saved dollars, improved metrics, and business outcomes — not demo quality. If it doesn't move the needle, we don't build it.",
+  },
+  {
+    icon: '🔍',
+    title: 'Radical transparency',
+    description: "We tell you when AI isn't the right solution. We share our reasoning, our uncertainty, and our constraints. No BS, no overselling.",
+  },
+  {
+    icon: '🏗️',
+    title: 'Production-first mindset',
+    description: 'Everything we build is designed to run reliably in production, not just in demos. Monitoring, failovers, and audit trails are non-negotiable.',
+  },
+  {
+    icon: '🤝',
+    title: 'Long-term partnership',
+    description: 'Our best client relationships are multi-year. We want to be the AI team that grows with your business, not a vendor who ships and disappears.',
+  },
+];
+---
+
+<BaseLayout
+  title="About"
+  description="Meet the Synthex team — AI engineers and strategists who've shipped AI systems for companies ranging from seed-stage to Fortune 500."
+>
+  <!-- Hero -->
+  <section class="section about-hero">
+    <div class="container">
+      <div class="about-hero-content">
+        <span class="label text-cyan js-reveal" data-reveal="fade-up">About Synthex</span>
+        <h1 class="display-2 js-reveal" data-reveal="fade-up" data-delay="0.1">
+          We're the team<br />
+          <em class="about-em">AI-first companies</em><br />
+          trust to ship
+        </h1>
+        <p class="body-lg text-muted js-reveal" data-reveal="fade-up" data-delay="0.2">
+          Founded in 2019 by two former Google DeepMind engineers, Synthex exists because we saw too many companies struggle to turn AI potential into real business outcomes. We built the agency we wished existed.
+        </p>
+      </div>
+
+      <div class="about-hero-quote js-reveal" data-reveal="fade-up" data-delay="0.4">
+        <blockquote class="about-quote heading-lg">
+          "The gap between a working AI demo and a working AI system is where most agencies fail. That's exactly where we specialize."
+        </blockquote>
+        <cite class="about-quote-attr body-sm text-muted">— Alex Chen, Co-founder & CEO</cite>
+      </div>
+    </div>
+  </section>
+
+  <StatsCounter />
+
+  <!-- Values -->
+  <section class="section">
+    <div class="container">
+      <SectionHeader
+        label="Our Values"
+        title="What drives us"
+        subtitle="These aren't wall decorations. They're the principles behind every decision we make."
+      />
+
+      <div class="values-grid">
+        {values.map((value, i) => (
+          <div class="value-card js-reveal" data-reveal="fade-up" data-delay={String(i * 0.1)}>
+            <span class="value-icon">{value.icon}</span>
+            <h3 class="value-title heading-md">{value.title}</h3>
+            <p class="value-desc body-sm text-muted">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section team-section">
+    <div class="container">
+      <SectionHeader
+        label="The Team"
+        title="Built by engineers, run by engineers"
+        subtitle="We're practitioners first, not consultants. Everyone on our team has shipped production AI systems."
+        accentWord="practitioners"
+      />
+
+      <div class="team-grid">
+        {team.map((member, i) => (
+          <TeamCard
+            name={member.name}
+            role={member.role}
+            bio={member.bio}
+            initial={member.initial}
+            color={member.color}
+            index={i}
+            twitterUrl={member.twitterUrl}
+            linkedinUrl={member.linkedinUrl}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section timeline-section">
+    <div class="container">
+      <SectionHeader
+        label="Our Story"
+        title="Six years building the future"
+        subtitle="From two engineers with a thesis to the AI agency trusted by 40+ companies."
+      />
+      <Timeline />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="about-cta js-reveal" data-reveal="fade-up">
+        <div>
+          <h2 class="heading-xl">We're hiring</h2>
+          <p class="body-lg text-muted">Join a team shipping AI systems that actually matter. Remote-first, equity, and serious technical challenges.</p>
+        </div>
+        <a href={`${base}contact/`} class="btn btn-primary" data-magnetic>
+          View open roles
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding-top: calc(var(--nav-height) + var(--space-4xl));
+    background: var(--color-bg);
+  }
+
+  .about-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: 800px;
+    margin-bottom: var(--space-4xl);
+  }
+
+  .about-em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .about-hero-quote {
+    max-width: 720px;
+    border-left: 3px solid var(--color-cyan);
+    padding-left: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .about-quote {
+    font-style: italic;
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  /* Values */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .value-card {
+    padding: var(--space-2xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    transition: border-color var(--transition-base);
+  }
+
+  .value-card:hover {
+    border-color: var(--color-cyan-border);
+  }
+
+  .value-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .value-title {
+    color: var(--color-text-primary);
+  }
+
+  /* Team */
+  .team-section {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  /* Timeline */
+  .timeline-section {
+    background: var(--color-bg);
+  }
+
+  /* CTA */
+  .about-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-3xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+  }
+
+  @media (max-width: 1024px) {
+    .team-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initReveal() {
+    document.querySelectorAll<HTMLElement>('.js-reveal').forEach((el) => {
+      const delay = parseFloat(el.dataset.delay || '0');
+      gsap.fromTo(el,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        }
+      );
+    });
+  }
+
+  initReveal();
+  document.addEventListener('astro:after-swap', initReveal);
+</script>

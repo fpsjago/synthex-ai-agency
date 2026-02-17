@@ -1,0 +1,27 @@
+/* ============================================================
+   SYNTHEX — Font Definitions
+   Using Google Fonts CDN + fallback stack
+   ============================================================ */
+
+/* Clash Display — Headings */
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap');
+
+/* General Sans — Body */
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap');
+
+/* Fallback definitions if Fontshare is unavailable */
+@font-face {
+  font-family: 'Clash Display';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: local('DM Sans');
+}
+
+@font-face {
+  font-family: 'General Sans';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: local('DM Sans');
+}

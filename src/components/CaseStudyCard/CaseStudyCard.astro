@@ -1,0 +1,187 @@
+---
+interface Props {
+  title: string;
+  client: string;
+  category: string;
+  result: string;
+  slug: string;
+  index?: number;
+}
+
+const { title, client, category, result, slug, index = 0 } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+// Category colors
+const categoryColor: Record<string, string> = {
+  'AI Workflow Automation': 'cyan',
+  'LLM Integration': 'green',
+  'Data Pipelines': 'cyan',
+  'AI Strategy': 'green',
+};
+
+const color = categoryColor[category] || 'cyan';
+---
+
+<a
+  href={`${base}work/${slug}/`}
+  class={`case-card case-card--${color} js-reveal`}
+  data-reveal="fade-up"
+  data-delay={String(index * 0.1)}
+>
+  <div class="case-card-inner">
+    <!-- Header -->
+    <div class="case-card-header">
+      <span class="case-card-category label">{category}</span>
+      <span class="case-card-client body-sm text-muted">{client}</span>
+    </div>
+
+    <!-- Title -->
+    <h3 class="case-card-title heading-md">{title}</h3>
+
+    <!-- Result chip -->
+    <div class="case-card-result">
+      <span class="case-card-result-icon">→</span>
+      <span class="body-sm">{result}</span>
+    </div>
+
+    <!-- Decorative number -->
+    <span class="case-card-num" aria-hidden="true">0{index + 1}</span>
+  </div>
+
+  <!-- Hover overlay -->
+  <div class="case-card-overlay" aria-hidden="true">
+    <span class="case-card-overlay-text label">View case study</span>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M5 12h14M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</a>
+
+<style>
+  .case-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+    min-height: 280px;
+    cursor: pointer;
+  }
+
+  .case-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .case-card--cyan:hover {
+    border-color: var(--color-cyan-border);
+    box-shadow: var(--shadow-cyan);
+  }
+
+  .case-card--green:hover {
+    border-color: rgba(57, 255, 20, 0.3);
+    box-shadow: var(--shadow-green);
+  }
+
+  .case-card-inner {
+    position: relative;
+    z-index: 1;
+    padding: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    height: 100%;
+  }
+
+  .case-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .case-card-category {
+    color: var(--color-cyan);
+  }
+
+  .case-card--green .case-card-category {
+    color: var(--color-green);
+  }
+
+  .case-card-title {
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+    flex: 1;
+  }
+
+  .case-card:hover .case-card-title {
+    color: var(--color-cyan);
+  }
+
+  .case-card--green:hover .case-card-title {
+    color: var(--color-green);
+  }
+
+  .case-card-result {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-cyan-dim);
+    border: 1px solid var(--color-cyan-border);
+    border-radius: var(--radius-md);
+    width: fit-content;
+    color: var(--color-cyan);
+  }
+
+  .case-card--green .case-card-result {
+    background: var(--color-green-dim);
+    border-color: rgba(57, 255, 20, 0.3);
+    color: var(--color-green);
+  }
+
+  .case-card-result-icon {
+    font-weight: 700;
+  }
+
+  .case-card-num {
+    position: absolute;
+    bottom: var(--space-lg);
+    right: var(--space-xl);
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-border);
+    line-height: 1;
+    transition: color var(--transition-base);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Hover overlay */
+  .case-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(57, 255, 20, 0.05));
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    padding: var(--space-xl);
+    color: var(--color-cyan);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+  }
+
+  .case-card--green .case-card-overlay {
+    color: var(--color-green);
+  }
+
+  .case-card:hover .case-card-overlay {
+    opacity: 1;
+  }
+</style>

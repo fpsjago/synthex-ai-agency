@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader/SectionHeader.astro';
+import BlogCard from '../../components/BlogCard/BlogCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+const sorted = posts.sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+const featured = sorted.find((p) => p.data.featured);
+const rest = sorted.filter((p) => !p.data.featured);
+const categories = ['All', ...new Set(posts.map((p) => p.data.category))];
+---
+
+<BaseLayout
+  title="Blog"
+  description="Insights on AI automation, LLM architecture, production engineering, and what's actually working in enterprise AI deployments."
+>
+  <!-- Hero -->
+  <section class="section blog-hero">
+    <div class="container">
+      <SectionHeader
+        label="Insights"
+        title="The AI practitioner's blog"
+        subtitle="We write about what we learn shipping AI systems — not trends, not hype."
+        accentWord="practitioner's"
+      />
+
+      <!-- Category filter -->
+      <div class="blog-filters">
+        {categories.map((cat, i) => (
+          <button
+            class={`blog-filter ${i === 0 ? 'blog-filter--active' : ''}`}
+            data-category={cat}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Posts grid -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="blog-grid" id="blog-grid">
+        {featured && (
+          <div class="blog-grid-item" data-category={featured.data.category}>
+            <BlogCard
+              title={featured.data.title}
+              description={featured.data.description}
+              publishDate={featured.data.publishDate}
+              author={featured.data.author}
+              category={featured.data.category}
+              slug={featured.slug}
+              readTime={featured.data.readTime}
+              featured={true}
+              index={0}
+            />
+          </div>
+        )}
+        {rest.map((post, i) => (
+          <div class="blog-grid-item" data-category={post.data.category}>
+            <BlogCard
+              title={post.data.title}
+              description={post.data.description}
+              publishDate={post.data.publishDate}
+              author={post.data.author}
+              category={post.data.category}
+              slug={post.slug}
+              readTime={post.data.readTime}
+              index={i + 1}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="section-sm blog-newsletter">
+    <div class="container">
+      <div class="newsletter-box js-reveal" data-reveal="fade-up">
+        <div>
+          <h2 class="heading-xl">Get it in your inbox</h2>
+          <p class="body-lg text-muted">Weekly AI insights. No fluff. Unsubscribe anytime.</p>
+        </div>
+        <form class="newsletter-form" onsubmit="return false;">
+          <input type="email" placeholder="your@email.com" class="newsletter-input" aria-label="Email" required />
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-hero {
+    padding-top: calc(var(--nav-height) + var(--space-3xl));
+    background: var(--color-bg);
+  }
+
+  .blog-filters {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .blog-filter {
+    padding: 0.5rem 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .blog-filter:hover {
+    border-color: var(--color-cyan-border);
+    color: var(--color-cyan);
+  }
+
+  .blog-filter--active {
+    background: var(--color-cyan-dim);
+    border-color: var(--color-cyan-border);
+    color: var(--color-cyan);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .blog-grid-item.hidden {
+    display: none;
+  }
+
+  /* Newsletter */
+  .blog-newsletter {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .newsletter-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-3xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+  }
+
+  .newsletter-input {
+    padding: 0.75rem 1rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    min-width: 220px;
+    transition: border-color var(--transition-fast);
+  }
+
+  .newsletter-input:focus {
+    outline: none;
+    border-color: var(--color-cyan);
+  }
+
+  .newsletter-input::placeholder {
+    color: var(--color-text-tertiary);
+  }
+
+  @media (max-width: 768px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .newsletter-box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .newsletter-form {
+      width: 100%;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+</style>
+
+<script>
+  function initBlogFilter() {
+    const filters = document.querySelectorAll<HTMLButtonElement>('.blog-filter');
+    const items = document.querySelectorAll<HTMLElement>('.blog-grid-item');
+
+    filters.forEach((filter) => {
+      filter.addEventListener('click', () => {
+        const category = filter.dataset.category;
+
+        filters.forEach((f) => f.classList.remove('blog-filter--active'));
+        filter.classList.add('blog-filter--active');
+
+        items.forEach((item) => {
+          if (category === 'All' || item.dataset.category === category) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  initBlogFilter();
+  document.addEventListener('astro:after-swap', initBlogFilter);
+</script>

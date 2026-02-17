@@ -1,0 +1,186 @@
+---
+const faqs = [
+  {
+    question: "How long does a typical engagement take?",
+    answer: "Most of our projects run 8-16 weeks from kickoff to deployment. Strategy engagements are typically 4-6 weeks. We move fast because we've solved most of the hard problems before — our frameworks and codebases let us focus on your specific requirements rather than reinventing the wheel.",
+  },
+  {
+    question: "Do you work with companies that have no existing AI infrastructure?",
+    answer: "Yes, and that's often the best situation. Starting fresh means we can design your AI infrastructure the right way from day one — without the technical debt of legacy systems. We handle everything from model selection to deployment infrastructure.",
+  },
+  {
+    question: "What models do you use? Are we locked into a specific provider?",
+    answer: "We're model-agnostic. We select models based on your requirements: task complexity, latency needs, cost constraints, and data privacy requirements. Most clients use a mix of Claude, GPT-4o, and open-source models. We design systems with model switching in mind so you're never locked in.",
+  },
+  {
+    question: "How do you handle data privacy and security?",
+    answer: "We take security seriously. All client data stays in your infrastructure unless you explicitly choose otherwise. We can work entirely within your VPC, use on-premises LLMs for sensitive data, and we implement encryption, audit logging, and access controls as standard. We sign NDAs before any data sharing.",
+  },
+  {
+    question: "What happens after the project is delivered?",
+    answer: "All Growth and Enterprise clients get a 3-month hypercare period with priority support. We also offer ongoing retainers for monitoring, optimization, and iteration. Most clients stay engaged long-term because AI systems improve over time with continuous refinement.",
+  },
+  {
+    question: "Do we own the code and IP?",
+    answer: "Yes — on all tiers. The code we write for you is yours. Enterprise clients also get the source code for any custom frameworks or tooling developed during the engagement. We only retain our pre-existing IP (our base frameworks, which we license to you royalty-free).",
+  },
+];
+---
+
+<div class="faq-accordion" id="faq-accordion">
+  {faqs.map((faq, i) => (
+    <div class="faq-item js-reveal" data-reveal="fade-up" data-delay={String(i * 0.06)}>
+      <button
+        class="faq-trigger"
+        aria-expanded="false"
+        aria-controls={`faq-panel-${i}`}
+        id={`faq-btn-${i}`}
+      >
+        <span class="faq-question body-lg">{faq.question}</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+
+      <div
+        class="faq-panel"
+        id={`faq-panel-${i}`}
+        role="region"
+        aria-labelledby={`faq-btn-${i}`}
+        hidden
+      >
+        <div class="faq-answer">
+          <p class="body-md text-muted">{faq.answer}</p>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--transition-fast);
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-item.open {
+    background: var(--color-surface);
+  }
+
+  .faq-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-xl);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .faq-trigger:hover {
+    color: var(--color-cyan);
+  }
+
+  .faq-question {
+    font-weight: 500;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    color: var(--color-text-tertiary);
+    transition: transform var(--transition-base), color var(--transition-fast);
+  }
+
+  .faq-item.open .faq-icon {
+    transform: rotate(180deg);
+    color: var(--color-cyan);
+  }
+
+  .faq-panel {
+    overflow: hidden;
+  }
+
+  .faq-panel[hidden] {
+    display: block;
+    max-height: 0;
+    visibility: hidden;
+  }
+
+  .faq-answer {
+    padding: 0 var(--space-xl) var(--space-xl);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-lg);
+  }
+
+  .faq-answer p {
+    max-width: 70ch;
+    line-height: 1.7;
+  }
+</style>
+
+<script>
+  function initFAQ() {
+    const accordion = document.getElementById('faq-accordion');
+    if (!accordion) return;
+
+    const items = accordion.querySelectorAll<HTMLElement>('.faq-item');
+
+    items.forEach((item) => {
+      const trigger = item.querySelector<HTMLButtonElement>('.faq-trigger');
+      const panel = item.querySelector<HTMLElement>('.faq-panel');
+
+      if (!trigger || !panel) return;
+
+      trigger.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+
+        // Close all
+        items.forEach((otherItem) => {
+          const otherPanel = otherItem.querySelector<HTMLElement>('.faq-panel');
+          const otherTrigger = otherItem.querySelector<HTMLButtonElement>('.faq-trigger');
+          otherItem.classList.remove('open');
+          if (otherPanel) {
+            otherPanel.removeAttribute('hidden');
+            otherPanel.style.maxHeight = '0';
+            otherPanel.style.visibility = 'hidden';
+          }
+          if (otherTrigger) {
+            otherTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle clicked
+        if (!isOpen) {
+          item.classList.add('open');
+          panel.removeAttribute('hidden');
+          panel.style.visibility = 'visible';
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  }
+
+  initFAQ();
+  document.addEventListener('astro:after-swap', initFAQ);
+</script>

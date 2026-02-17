@@ -1,0 +1,188 @@
+---
+const testimonials = [
+  {
+    quote: "Synthex cut our ops overhead by 60% in 14 weeks. The ROI was immediate and the quality exceeded our expectations.",
+    author: "James Whitfield",
+    role: "COO",
+    company: "TechCorp",
+  },
+  {
+    quote: "Our AI customer service now handles 10,000 tickets per day with 78% auto-resolution. Our team focuses on real problems now.",
+    author: "Priya Mehta",
+    role: "VP Customer Success",
+    company: "RetailBrand",
+  },
+  {
+    quote: "The revenue attribution model they built literally changed how we allocate our $1.8M monthly marketing budget. 3.2x ROAS improvement.",
+    author: "Marcus Delacroix",
+    role: "CMO",
+    company: "GrowthSaaS",
+  },
+  {
+    quote: "Synthex doesn't just build AI systems — they understand business. That's rare in this space.",
+    author: "Sara Kimura",
+    role: "CEO",
+    company: "Logistix",
+  },
+  {
+    quote: "The LLM integration they built processes 4 million requests per day reliably. We've never had an outage.",
+    author: "David Okonkwo",
+    role: "CTO",
+    company: "DataFirst",
+  },
+  {
+    quote: "We went from 0 to a production AI agent in 8 weeks. The team is fast, communicative, and genuinely expert.",
+    author: "Camille Fontaine",
+    role: "Head of Product",
+    company: "FlowOS",
+  },
+];
+
+// Duplicate for seamless loop
+const doubled = [...testimonials, ...testimonials];
+---
+
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="testimonials-header">
+      <span class="label text-cyan">What Clients Say</span>
+      <h2 class="heading-xl">Trusted by ambitious teams</h2>
+    </div>
+  </div>
+
+  <div class="marquee-wrapper" aria-label="Client testimonials" role="region">
+    <div class="marquee-track" aria-hidden="false">
+      {doubled.map((t, i) => (
+        <article class="testimonial-card" key={i}>
+          <blockquote class="testimonial-quote body-md">"{t.quote}"</blockquote>
+          <footer class="testimonial-footer">
+            <div class="testimonial-avatar">
+              {t.author.charAt(0)}
+            </div>
+            <div>
+              <cite class="testimonial-author body-sm">{t.author}</cite>
+              <p class="testimonial-role body-sm text-muted">{t.role}, {t.company}</p>
+            </div>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+
+  .testimonials-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .marquee-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Fade edges */
+  .marquee-wrapper::before,
+  .marquee-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .marquee-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--color-bg), transparent);
+  }
+
+  .marquee-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--color-bg), transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: var(--space-xl);
+    animation: marquee 40s linear infinite;
+    width: max-content;
+    padding: var(--space-lg) 0;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .testimonial-card {
+    flex-shrink: 0;
+    width: 380px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    transition: border-color var(--transition-fast);
+  }
+
+  .testimonial-card:hover {
+    border-color: var(--color-cyan-border);
+  }
+
+  .testimonial-quote {
+    color: var(--color-text-primary);
+    line-height: 1.65;
+    font-style: normal;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: auto;
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .testimonial-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-cyan), var(--color-green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0A0A0A;
+    flex-shrink: 0;
+  }
+
+  .testimonial-author {
+    font-weight: 600;
+    font-style: normal;
+    color: var(--color-text-primary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+    }
+  }
+</style>

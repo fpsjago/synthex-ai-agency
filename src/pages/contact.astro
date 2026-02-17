@@ -1,0 +1,266 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm/ContactForm.astro';
+import SectionHeader from '../components/SectionHeader/SectionHeader.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const contactInfo = [
+  {
+    icon: '📍',
+    label: 'Headquarters',
+    value: 'San Francisco, CA',
+    sub: '340 Pine Street, Suite 800',
+  },
+  {
+    icon: '🗽',
+    label: 'East Coast',
+    value: 'New York, NY',
+    sub: '350 5th Avenue, Suite 5000',
+  },
+  {
+    icon: '✉️',
+    label: 'Email',
+    value: 'hello@synthex.ai',
+    sub: 'We reply within 24 hours',
+  },
+  {
+    icon: '📞',
+    label: 'Phone',
+    value: '+1 (415) 800-0420',
+    sub: 'Mon–Fri, 9am–6pm PST',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Start a project with Synthex. Book a free 45-minute strategy call or send us a message about your AI automation needs."
+>
+  <!-- Hero -->
+  <section class="section contact-hero">
+    <div class="container">
+      <div class="contact-hero-content">
+        <span class="label text-cyan js-reveal" data-reveal="fade-up">Contact</span>
+        <h1 class="display-2 js-reveal" data-reveal="fade-up" data-delay="0.1">
+          Let's build something<br />
+          <em class="contact-em">extraordinary</em>
+        </h1>
+        <p class="body-lg text-muted js-reveal" data-reveal="fade-up" data-delay="0.2">
+          Every great AI deployment starts with a conversation. Tell us about your challenges, and we'll tell you what's possible.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Form -->
+        <div class="contact-form-wrap js-reveal" data-reveal="fade-up">
+          <div class="contact-form-header">
+            <h2 class="heading-xl">Send us a message</h2>
+            <p class="body-md text-muted">We'll get back to you within 24 hours.</p>
+          </div>
+          <ContactForm />
+        </div>
+
+        <!-- Info sidebar -->
+        <aside class="contact-sidebar">
+          <!-- Office info -->
+          <div class="contact-info-cards">
+            {contactInfo.map((info, i) => (
+              <div class="contact-info-card js-reveal" data-reveal="fade-up" data-delay={String(i * 0.08)}>
+                <span class="contact-info-icon">{info.icon}</span>
+                <div>
+                  <p class="label text-muted">{info.label}</p>
+                  <p class="contact-info-value body-md">{info.value}</p>
+                  <p class="body-sm text-muted">{info.sub}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Map placeholder -->
+          <div class="contact-map js-reveal" data-reveal="fade-up" data-delay="0.4" aria-label="Office location map placeholder">
+            <div class="contact-map-inner">
+              <div class="contact-map-pin" aria-hidden="true">📍</div>
+              <p class="body-sm text-muted">San Francisco, CA</p>
+              <p class="body-sm text-muted">340 Pine Street</p>
+            </div>
+          </div>
+
+          <!-- CTA -->
+          <div class="contact-cal js-reveal" data-reveal="fade-up" data-delay="0.5">
+            <h3 class="heading-md">Prefer a call?</h3>
+            <p class="body-sm text-muted">Book a free 45-minute strategy session directly on our calendar.</p>
+            <a href="#" class="btn btn-secondary">
+              Book on Calendly →
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-hero {
+    padding-top: calc(var(--nav-height) + var(--space-4xl));
+    background: var(--color-bg);
+  }
+
+  .contact-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: 700px;
+  }
+
+  .contact-em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Grid */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: var(--space-4xl);
+    align-items: start;
+  }
+
+  .contact-form-wrap {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .contact-form-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  /* Sidebar */
+  .contact-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-xl));
+  }
+
+  .contact-info-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .contact-info-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--transition-fast);
+  }
+
+  .contact-info-card:hover {
+    border-color: var(--color-cyan-border);
+  }
+
+  .contact-info-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .contact-info-value {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  /* Map */
+  .contact-map {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 200px;
+    background: var(--color-surface);
+    position: relative;
+  }
+
+  .contact-map-inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    background: radial-gradient(circle at center, var(--color-cyan-dim), transparent 70%);
+  }
+
+  .contact-map-pin {
+    font-size: 2.5rem;
+  }
+
+  /* Cal */
+  .contact-cal {
+    padding: var(--space-xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-sidebar {
+      position: static;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initReveal() {
+    document.querySelectorAll<HTMLElement>('.js-reveal').forEach((el) => {
+      const delay = parseFloat(el.dataset.delay || '0');
+      gsap.fromTo(el,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        }
+      );
+    });
+  }
+
+  initReveal();
+  document.addEventListener('astro:after-swap', initReveal);
+</script>

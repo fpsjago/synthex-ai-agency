@@ -1,0 +1,186 @@
+---
+import SectionHeader from '../SectionHeader/SectionHeader.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const services = [
+  {
+    icon: '⚡',
+    title: 'AI Workflow Automation',
+    description: 'Transform repetitive operations into self-optimizing pipelines that adapt to your business logic.',
+    href: `${base}services/`,
+    tag: 'Most Popular',
+  },
+  {
+    icon: '🧠',
+    title: 'LLM Integration',
+    description: 'Embed world-class language models into your products with RAG, fine-tuning, and production-grade deployment.',
+    href: `${base}services/`,
+    tag: null,
+  },
+  {
+    icon: '🔄',
+    title: 'Data Pipelines',
+    description: 'Clean, structured, high-quality data infrastructure that feeds your AI systems with what they need.',
+    href: `${base}services/`,
+    tag: null,
+  },
+  {
+    icon: '🎯',
+    title: 'AI Strategy Consulting',
+    description: 'Cut through the hype. Identify the highest-leverage AI opportunities and avoid costly mistakes.',
+    href: `${base}services/`,
+    tag: null,
+  },
+  {
+    icon: '🤖',
+    title: 'Agent Development',
+    description: 'Custom AI agents that reason, plan, and execute multi-step tasks with human-level judgment.',
+    href: `${base}services/`,
+    tag: null,
+  },
+  {
+    icon: '🔍',
+    title: 'Process Mining',
+    description: 'Discover automation opportunities hidden in your operational data using AI-powered analysis.',
+    href: `${base}services/`,
+    tag: null,
+  },
+];
+---
+
+<section class="section services-section" id="services">
+  <div class="container">
+    <SectionHeader
+      label="What We Do"
+      title="AI capabilities that drive real outcomes"
+      subtitle="We don't sell AI for its own sake. Every engagement is designed around measurable business impact."
+      accentWord="real outcomes"
+    />
+
+    <div class="services-grid">
+      {services.map((service, i) => (
+        <a
+          href={service.href}
+          class="service-card js-reveal"
+          data-reveal="fade-up"
+          data-delay={String(i * 0.08)}
+          data-index={i}
+        >
+          {service.tag && (
+            <span class="service-card-tag label text-green">{service.tag}</span>
+          )}
+          <div class="service-card-icon">{service.icon}</div>
+          <h3 class="service-card-title heading-md">{service.title}</h3>
+          <p class="service-card-desc body-sm text-muted">{service.description}</p>
+          <div class="service-card-arrow">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10h12M12 4l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="service-card-bg" aria-hidden="true"></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    background-color: var(--color-bg);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .service-card {
+    position: relative;
+    padding: var(--space-2xl);
+    background: var(--color-bg);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    overflow: hidden;
+    transition: background-color var(--transition-base);
+    min-height: 280px;
+  }
+
+  .service-card:hover {
+    background: var(--color-surface);
+  }
+
+  .service-card:hover .service-card-bg {
+    opacity: 1;
+  }
+
+  .service-card:hover .service-card-arrow {
+    color: var(--color-cyan);
+    transform: translateX(4px);
+  }
+
+  /* Hover glow bg */
+  .service-card-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 0% 0%, var(--color-cyan-dim), transparent 60%);
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    pointer-events: none;
+  }
+
+  .service-card-tag {
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    padding: 0.25rem 0.625rem;
+    background: var(--color-green-dim);
+    border: 1px solid rgba(57, 255, 20, 0.3);
+    border-radius: var(--radius-full);
+  }
+
+  .service-card-icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .service-card-title {
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .service-card:hover .service-card-title {
+    color: var(--color-cyan);
+  }
+
+  .service-card-desc {
+    flex: 1;
+    line-height: 1.6;
+  }
+
+  .service-card-arrow {
+    margin-top: auto;
+    color: var(--color-text-tertiary);
+    transition: color var(--transition-fast), transform var(--transition-spring);
+    width: fit-content;
+  }
+
+  @media (max-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

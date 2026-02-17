@@ -1,0 +1,78 @@
+---
+interface Props {
+  label?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  accentWord?: string;
+}
+
+const { label, title, subtitle, align = 'left', accentWord } = Astro.props;
+
+// Replace accent word with highlighted version
+const processedTitle = accentWord
+  ? title.replace(accentWord, `<em class="section-header-em">${accentWord}</em>`)
+  : title;
+---
+
+<div class={`section-header section-header--${align} js-reveal`} data-reveal="fade-up">
+  {label && (
+    <span class="section-header-label label text-cyan">{label}</span>
+  )}
+  <h2 class="section-header-title heading-xl" set:html={processedTitle} />
+  {subtitle && (
+    <p class="section-header-sub body-lg text-muted">{subtitle}</p>
+  )}
+</div>
+
+<style>
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .section-header--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .section-header-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .section-header-label::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--color-cyan);
+  }
+
+  .section-header--center .section-header-label::before {
+    display: none;
+  }
+
+  .section-header-title {
+    max-width: 20ch;
+  }
+
+  .section-header--center .section-header-title {
+    max-width: 30ch;
+  }
+
+  :global(.section-header-em) {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green) 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-header-sub {
+    max-width: 55ch;
+  }
+</style>

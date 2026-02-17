@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHeader from '../../components/SectionHeader/SectionHeader.astro';
+import CaseStudyCard from '../../components/CaseStudyCard/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+
+const caseStudies = await getCollection('case-studies');
+
+// Get unique categories
+const categories = ['All', ...new Set(caseStudies.map((cs) => cs.data.category))];
+---
+
+<BaseLayout
+  title="Work"
+  description="Explore Synthex case studies — real AI deployments with measurable outcomes for companies across industries."
+>
+  <!-- Hero -->
+  <section class="section work-hero">
+    <div class="container">
+      <SectionHeader
+        label="Case Studies"
+        title="Work that speaks for itself"
+        subtitle="Every project here is a production deployment with documented results. No vaporware."
+        accentWord="speaks for itself"
+      />
+
+      <!-- Category filter -->
+      <div class="work-filters" role="tablist" aria-label="Filter case studies by category">
+        {categories.map((cat, i) => (
+          <button
+            role="tab"
+            class={`work-filter ${i === 0 ? 'work-filter--active' : ''}`}
+            data-category={cat}
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Cases Grid -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="work-grid" id="work-grid">
+        {caseStudies.map((cs, i) => (
+          <div class="work-grid-item" data-category={cs.data.category}>
+            <CaseStudyCard
+              title={cs.data.title}
+              client={cs.data.client}
+              category={cs.data.category}
+              result={cs.data.result}
+              slug={cs.slug}
+              index={i}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="work-cta js-reveal" data-reveal="fade-up">
+        <div class="work-cta-text">
+          <h2 class="heading-xl">Ready to be our next case study?</h2>
+          <p class="body-lg text-muted">Let's talk about what we can build together.</p>
+        </div>
+        <a href="/contact/" class="btn btn-primary" data-magnetic>
+          Start a project
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .work-hero {
+    padding-top: calc(var(--nav-height) + var(--space-3xl));
+    background: var(--color-bg);
+  }
+
+  .work-filters {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .work-filter {
+    padding: 0.5rem 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .work-filter:hover {
+    border-color: var(--color-cyan-border);
+    color: var(--color-cyan);
+  }
+
+  .work-filter--active {
+    background: var(--color-cyan-dim);
+    border-color: var(--color-cyan-border);
+    color: var(--color-cyan);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .work-grid-item {
+    transition: opacity var(--transition-base);
+  }
+
+  .work-grid-item.hidden {
+    display: none;
+  }
+
+  .work-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-3xl);
+    background: linear-gradient(135deg, var(--color-cyan-dim), var(--color-surface));
+    border: 1px solid var(--color-cyan-border);
+    border-radius: var(--radius-xl);
+  }
+
+  @media (max-width: 768px) {
+    .work-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .work-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<script>
+  function initWorkFilter() {
+    const filters = document.querySelectorAll<HTMLButtonElement>('.work-filter');
+    const items = document.querySelectorAll<HTMLElement>('.work-grid-item');
+
+    filters.forEach((filter) => {
+      filter.addEventListener('click', () => {
+        const category = filter.dataset.category;
+
+        filters.forEach((f) => {
+          f.classList.remove('work-filter--active');
+          f.setAttribute('aria-selected', 'false');
+        });
+        filter.classList.add('work-filter--active');
+        filter.setAttribute('aria-selected', 'true');
+
+        items.forEach((item) => {
+          if (category === 'All' || item.dataset.category === category) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  initWorkFilter();
+  document.addEventListener('astro:after-swap', initWorkFilter);
+</script>

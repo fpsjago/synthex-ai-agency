@@ -1,0 +1,157 @@
+---
+const stats = [
+  { value: 40, suffix: '+', label: 'AI projects shipped', description: 'Across 12 industries, from seed-stage to Fortune 500' },
+  { value: 12, suffix: 'M+', prefix: '$', label: 'Saved for clients', description: 'Through automation, efficiency, and AI-driven optimization' },
+  { value: 98, suffix: '%', label: 'Client retention', description: 'Our clients stay because the results speak for themselves' },
+  { value: 3.2, suffix: '×', label: 'Average ROI multiple', description: 'Measured across all engagements in the first 12 months' },
+];
+---
+
+<section class="section stats-section" id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      {stats.map((stat, i) => (
+        <div
+          class="stat-item js-reveal"
+          data-reveal="fade-up"
+          data-delay={String(i * 0.1)}
+        >
+          <div class="stat-value-wrap">
+            {stat.prefix && <span class="stat-prefix">{stat.prefix}</span>}
+            <span
+              class="stat-value js-counter"
+              data-target={stat.value}
+              data-suffix={stat.suffix}
+              data-prefix={stat.prefix || ''}
+              data-decimals={String(stat.value % 1 !== 0 ? 1 : 0)}
+            >
+              {stat.prefix || ''}{stat.value}{stat.suffix}
+            </span>
+          </div>
+          <h3 class="stat-label heading-md">{stat.label}</h3>
+          <p class="stat-desc body-sm text-muted">{stat.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-section {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-2xl);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-xl) 0;
+    border-left: 2px solid var(--color-border);
+    padding-left: var(--space-xl);
+    transition: border-color var(--transition-base);
+  }
+
+  .stat-item:hover {
+    border-color: var(--color-cyan);
+  }
+
+  .stat-value-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 0.125rem;
+  }
+
+  .stat-prefix {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--color-cyan);
+  }
+
+  .stat-value {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    color: var(--color-text-primary);
+  }
+
+  .stat-desc {
+    max-width: 22ch;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1024px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 580px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-item {
+      border-left: none;
+      border-top: 2px solid var(--color-border);
+      padding-left: 0;
+      padding-top: var(--space-xl);
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initCounters() {
+    const counters = document.querySelectorAll<HTMLElement>('.js-counter');
+
+    counters.forEach((counter) => {
+      const target = parseFloat(counter.dataset.target || '0');
+      const suffix = counter.dataset.suffix || '';
+      const prefix = counter.dataset.prefix || '';
+      const decimals = parseInt(counter.dataset.decimals || '0');
+
+      const obj = { value: 0 };
+
+      ScrollTrigger.create({
+        trigger: counter,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(obj, {
+            value: target,
+            duration: 2,
+            ease: 'power2.out',
+            onUpdate: () => {
+              counter.textContent = prefix + obj.value.toFixed(decimals) + suffix;
+            },
+          });
+        },
+      });
+    });
+  }
+
+  initCounters();
+  document.addEventListener('astro:after-swap', initCounters);
+</script>

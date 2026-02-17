@@ -1,0 +1,39 @@
+---
+---
+
+<div class="reading-progress-bar" id="reading-progress" aria-hidden="true" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+<style>
+  .reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--color-cyan), var(--color-green));
+    width: 0%;
+    z-index: calc(var(--z-nav) + 1);
+    transition: width 50ms linear;
+    transform-origin: left;
+  }
+</style>
+
+<script>
+  function initReadingProgress() {
+    const bar = document.getElementById('reading-progress');
+    if (!bar) return;
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = `${Math.min(100, progress)}%`;
+      bar.setAttribute('aria-valuenow', String(Math.round(progress)));
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  initReadingProgress();
+  document.addEventListener('astro:after-swap', initReadingProgress);
+</script>

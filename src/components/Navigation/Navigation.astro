@@ -1,0 +1,386 @@
+---
+import ThemeToggle from '../ThemeToggle/ThemeToggle.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const navItems = [
+  { label: 'Services', href: `${base}services/` },
+  { label: 'Work', href: `${base}work/` },
+  { label: 'About', href: `${base}about/` },
+  { label: 'Pricing', href: `${base}pricing/` },
+  { label: 'Blog', href: `${base}blog/` },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="nav-header" id="main-nav">
+  <div class="container nav-inner">
+    <!-- Logo -->
+    <a href={base} class="nav-logo" aria-label="Synthex Home">
+      <span class="nav-logo-mark">SX</span>
+      <span class="nav-logo-text">SYNTHEX</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="nav-links" aria-label="Main navigation">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`nav-link ${currentPath.startsWith(item.href) ? 'nav-link--active' : ''}`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Right Controls -->
+    <div class="nav-controls">
+      <ThemeToggle />
+      <a href={`${base}contact/`} class="btn btn-primary nav-cta">
+        Get Started
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu-inner">
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      {navItems.map((item, i) => (
+        <a
+          href={item.href}
+          class="mobile-nav-link"
+          data-index={i}
+          style={`--delay: ${i * 0.08}s`}
+        >
+          <span class="mobile-nav-number">0{i + 1}</span>
+          {item.label}
+        </a>
+      ))}
+      <a
+        href={`${base}contact/`}
+        class="mobile-nav-link mobile-nav-cta"
+        data-index={navItems.length}
+        style={`--delay: ${navItems.length * 0.08}s`}
+      >
+        Get Started →
+      </a>
+    </nav>
+
+    <div class="mobile-menu-footer">
+      <p class="body-sm text-muted">© 2025 Synthex. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-nav);
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    transition: background-color var(--transition-base), backdrop-filter var(--transition-base), border-color var(--transition-base);
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-header.scrolled {
+    background-color: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: var(--color-border);
+  }
+
+  [data-theme="light"] .nav-header.scrolled {
+    background-color: rgba(245, 245, 240, 0.85);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+  }
+
+  /* Logo */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .nav-logo-mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: linear-gradient(135deg, var(--color-cyan), var(--color-green));
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #0A0A0A;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo-text {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    color: var(--color-text-primary);
+  }
+
+  /* Desktop Nav Links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--color-cyan);
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+    transform-origin: left;
+  }
+
+  .nav-link:hover,
+  .nav-link--active {
+    color: var(--color-text-primary);
+  }
+
+  .nav-link:hover::after,
+  .nav-link--active::after {
+    transform: scaleX(1);
+  }
+
+  /* Controls */
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-cta {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  /* Hamburger */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2rem;
+    height: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--color-text-primary);
+    border-radius: 1px;
+    transition: transform var(--transition-base), opacity var(--transition-fast);
+    transform-origin: center;
+  }
+
+  .nav-hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+
+  .nav-hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .nav-hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-nav) - 1);
+    background-color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--nav-height);
+    transform: translateX(100%);
+    transition: transform var(--transition-slow);
+    pointer-events: none;
+  }
+
+  .mobile-menu.open {
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  .mobile-menu-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--space-3xl) var(--container-padding) var(--space-2xl);
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: color var(--transition-fast);
+    transform: translateX(40px);
+    opacity: 0;
+    transition: color var(--transition-fast), transform var(--transition-slow), opacity var(--transition-slow);
+    transition-delay: var(--delay, 0s);
+  }
+
+  .mobile-menu.open .mobile-nav-link {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .mobile-nav-cta {
+    color: var(--color-green);
+    border-color: transparent;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin-top: var(--space-md);
+  }
+
+  .mobile-nav-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-tertiary);
+    letter-spacing: 0.1em;
+    align-self: flex-start;
+    margin-top: 0.6em;
+  }
+
+  .mobile-menu-footer {
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .nav-links {
+      display: none;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    .nav-hamburger {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .mobile-menu {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function initNav() {
+    const header = document.getElementById('main-nav');
+    const hamburger = document.getElementById('nav-hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (!header || !hamburger || !mobileMenu) return;
+
+    // Scroll behavior
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // Mobile menu toggle
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      mobileMenu.setAttribute('aria-hidden', String(isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+
+    // Close on link click
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  initNav();
+  document.addEventListener('astro:after-swap', initNav);
+</script>

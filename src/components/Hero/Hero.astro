@@ -1,0 +1,277 @@
+---
+import GradientMesh from '../GradientMesh/GradientMesh.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="hero grain-overlay" id="hero">
+  <GradientMesh />
+
+  <div class="container hero-container">
+    <!-- Label -->
+    <div class="hero-label js-reveal" data-reveal="fade-up">
+      <span class="hero-label-dot"></span>
+      <span class="label text-cyan">AI Automation Agency</span>
+    </div>
+
+    <!-- Headline -->
+    <div class="hero-headline-wrap">
+      <h1 class="hero-headline display-1 js-split-text" id="hero-headline">
+        We Build<br />
+        <em class="hero-headline-em">AI Systems</em><br />
+        That Work
+      </h1>
+    </div>
+
+    <!-- Subtext -->
+    <p class="hero-sub body-lg js-reveal" data-reveal="fade-up" data-delay="0.4">
+      From workflow automation to production LLM deployments — Synthex turns AI hype into measurable business outcomes.
+    </p>
+
+    <!-- CTA pair -->
+    <div class="hero-cta js-reveal" data-reveal="fade-up" data-delay="0.6">
+      <a href={`${base}contact/`} class="btn btn-primary" data-magnetic>
+        Start a project
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href={`${base}work/`} class="btn btn-secondary" data-magnetic>
+        View our work
+      </a>
+    </div>
+
+    <!-- Stats strip -->
+    <div class="hero-stats js-reveal" data-reveal="fade-up" data-delay="0.8">
+      <div class="hero-stat">
+        <span class="hero-stat-value">40<span class="text-cyan">+</span></span>
+        <span class="hero-stat-label label">Clients</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">$12M<span class="text-green">+</span></span>
+        <span class="hero-stat-label label">Saved</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">98<span class="text-cyan">%</span></span>
+        <span class="hero-stat-label label">Retention</span>
+      </div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">3.2<span class="text-green">×</span></span>
+        <span class="hero-stat-label label">Avg ROI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero-scroll js-reveal" data-reveal="fade-up" data-delay="1">
+    <div class="hero-scroll-line"></div>
+    <span class="label text-muted">Scroll</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: var(--nav-height);
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-4xl);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    max-width: 900px;
+  }
+
+  /* Label */
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.375rem 0.875rem;
+    background: var(--color-cyan-dim);
+    border: 1px solid var(--color-cyan-border);
+    border-radius: var(--radius-full);
+    width: fit-content;
+  }
+
+  .hero-label-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-cyan);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* Headline */
+  .hero-headline-wrap {
+    overflow: hidden;
+  }
+
+  .hero-headline {
+    margin: 0;
+    color: var(--color-text-primary);
+  }
+
+  .hero-headline-em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green) 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Sub */
+  .hero-sub {
+    max-width: 52ch;
+    color: var(--color-text-secondary);
+  }
+
+  /* CTA */
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    align-items: center;
+  }
+
+  /* Stats */
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    padding: var(--space-lg) 0;
+    border-top: 1px solid var(--color-border);
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .hero-stat-value {
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+
+  .hero-stat-label {
+    color: var(--color-text-tertiary);
+  }
+
+  .hero-stat-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--color-border);
+    flex-shrink: 0;
+  }
+
+  /* Scroll indicator */
+  .hero-scroll {
+    position: absolute;
+    bottom: var(--space-2xl);
+    left: var(--container-padding);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    z-index: 2;
+  }
+
+  .hero-scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--color-cyan), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  @media (max-width: 768px) {
+    .hero-stat-divider {
+      display: none;
+    }
+
+    .hero-stats {
+      gap: var(--space-lg);
+    }
+
+    .hero-scroll {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  function initHero() {
+    const headline = document.getElementById('hero-headline');
+    if (!headline) return;
+
+    // Simple text reveal without SplitText plugin (uses CSS chars)
+    const text = headline.textContent || '';
+    headline.style.opacity = '1';
+
+    // Reveal elements
+    const reveals = document.querySelectorAll<HTMLElement>('.js-reveal');
+    reveals.forEach((el) => {
+      const delay = parseFloat(el.dataset.delay || '0');
+      const type = el.dataset.reveal || 'fade-up';
+
+      const fromVars: gsap.TweenVars = { opacity: 0 };
+      if (type === 'fade-up') fromVars.y = 30;
+
+      gsap.fromTo(el, fromVars, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.2 + delay,
+        ease: 'power3.out',
+      });
+    });
+
+    // Headline reveal
+    gsap.fromTo(
+      headline,
+      { opacity: 0, y: 50, clipPath: 'inset(0 0 100% 0)' },
+      {
+        opacity: 1,
+        y: 0,
+        clipPath: 'inset(0 0 0% 0)',
+        duration: 1,
+        delay: 0.1,
+        ease: 'expo.out',
+      }
+    );
+  }
+
+  initHero();
+  document.addEventListener('astro:after-swap', initHero);
+</script>

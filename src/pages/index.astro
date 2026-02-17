@@ -1,0 +1,288 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero/Hero.astro';
+import ServicesGrid from '../components/ServicesGrid/ServicesGrid.astro';
+import StatsCounter from '../components/StatsCounter/StatsCounter.astro';
+import TestimonialsMarquee from '../components/TestimonialsMarquee/TestimonialsMarquee.astro';
+import LogoCloud from '../components/LogoCloud/LogoCloud.astro';
+import SectionHeader from '../components/SectionHeader/SectionHeader.astro';
+import CaseStudyCard from '../components/CaseStudyCard/CaseStudyCard.astro';
+import FAQAccordion from '../components/FAQAccordion/FAQAccordion.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const caseStudies = await getCollection('case-studies');
+const featured = caseStudies.filter((cs) => cs.data.featured).slice(0, 3);
+---
+
+<BaseLayout title="AI Automation Agency" description="Synthex builds AI systems that work. From workflow automation to production LLM deployments — measurable results, not demos.">
+  <Hero />
+
+  <LogoCloud />
+
+  <ServicesGrid />
+
+  <StatsCounter />
+
+  <!-- Case Studies Preview -->
+  <section class="section" id="work-preview">
+    <div class="container">
+      <div class="work-preview-header">
+        <SectionHeader
+          label="Selected Work"
+          title="AI that delivers, not just demos"
+          subtitle="Every case study represents a real deployment with measurable outcomes."
+          accentWord="delivers"
+        />
+        <a href={`${base}work/`} class="btn btn-secondary work-all-link">
+          View all case studies
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="case-studies-grid">
+        {featured.map((cs, i) => (
+          <CaseStudyCard
+            title={cs.data.title}
+            client={cs.data.client}
+            category={cs.data.category}
+            result={cs.data.result}
+            slug={cs.slug}
+            index={i}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <TestimonialsMarquee />
+
+  <!-- CTA Section -->
+  <section class="section cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-content">
+          <span class="label text-cyan">Ready to start?</span>
+          <h2 class="display-2">
+            Turn AI potential<br />
+            into <em class="cta-em">real outcomes</em>
+          </h2>
+          <p class="body-lg text-muted">
+            Let's talk about your specific challenges. Free 45-minute strategy call, no commitment.
+          </p>
+          <div class="cta-actions">
+            <a href={`${base}contact/`} class="btn btn-primary" data-magnetic>
+              Book a strategy call
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a href={`${base}pricing/`} class="btn btn-secondary" data-magnetic>
+              See pricing
+            </a>
+          </div>
+        </div>
+        <div class="cta-visual" aria-hidden="true">
+          <div class="cta-mesh">
+            <div class="cta-blob cta-blob-1"></div>
+            <div class="cta-blob cta-blob-2"></div>
+          </div>
+          <div class="cta-metrics">
+            <div class="cta-metric">
+              <span class="cta-metric-val">60%</span>
+              <span class="cta-metric-label label">Ops cost reduction</span>
+            </div>
+            <div class="cta-metric">
+              <span class="cta-metric-val">8wk</span>
+              <span class="cta-metric-label label">Avg time to deploy</span>
+            </div>
+            <div class="cta-metric">
+              <span class="cta-metric-val">3.2×</span>
+              <span class="cta-metric-label label">Avg ROI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-sm" id="faq">
+    <div class="container faq-container">
+      <SectionHeader
+        label="FAQ"
+        title="Common questions"
+        subtitle="Everything you need to know before getting started."
+      />
+      <FAQAccordion />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .work-preview-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .work-preview-header .section-header {
+    margin-bottom: 0;
+  }
+
+  .work-all-link {
+    flex-shrink: 0;
+  }
+
+  .case-studies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  /* CTA Section */
+  .cta-section {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  .cta-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  .cta-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .cta-content h2 {
+    font-family: var(--font-heading);
+  }
+
+  .cta-em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  /* CTA Visual */
+  .cta-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+  }
+
+  .cta-mesh {
+    position: absolute;
+    inset: 0;
+  }
+
+  .cta-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.2;
+  }
+
+  .cta-blob-1 {
+    width: 250px;
+    height: 250px;
+    background: var(--color-cyan);
+    top: -20%;
+    right: -10%;
+  }
+
+  .cta-blob-2 {
+    width: 180px;
+    height: 180px;
+    background: var(--color-green);
+    bottom: -10%;
+    left: 10%;
+  }
+
+  .cta-metrics {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    width: 100%;
+  }
+
+  .cta-metric {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: center;
+    text-align: center;
+  }
+
+  .cta-metric-val {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cta-metric-label {
+    color: var(--color-text-tertiary);
+    font-size: 0.65rem;
+  }
+
+  .faq-container {
+    max-width: 860px;
+  }
+
+  @media (max-width: 1024px) {
+    .case-studies-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .cta-visual {
+      display: none;
+    }
+
+    .work-preview-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .case-studies-grid {
+      gap: var(--space-md);
+    }
+  }
+</style>

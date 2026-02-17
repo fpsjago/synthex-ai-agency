@@ -1,0 +1,125 @@
+---
+// AI tool logos represented as text marks (no img tags needed)
+const logos = [
+  { name: 'Anthropic', abbr: 'ANT' },
+  { name: 'OpenAI', abbr: 'OAI' },
+  { name: 'LangChain', abbr: 'LC' },
+  { name: 'Pinecone', abbr: 'PIN' },
+  { name: 'Temporal', abbr: 'TMP' },
+  { name: 'Qdrant', abbr: 'QDR' },
+  { name: 'Mistral', abbr: 'MST' },
+  { name: 'Weaviate', abbr: 'WEV' },
+  { name: 'Cohere', abbr: 'COH' },
+  { name: 'HuggingFace', abbr: 'HF' },
+];
+
+const doubled = [...logos, ...logos];
+---
+
+<div class="logo-cloud-section" aria-label="Technologies we work with">
+  <div class="container">
+    <p class="logo-cloud-label label text-muted">Built on the best AI infrastructure</p>
+  </div>
+
+  <div class="logo-marquee-wrapper" aria-hidden="true">
+    <div class="logo-marquee-track">
+      {doubled.map((logo, i) => (
+        <div class="logo-item" key={i}>
+          <span class="logo-abbr">{logo.abbr}</span>
+          <span class="logo-name body-sm">{logo.name}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .logo-cloud-section {
+    padding: var(--space-3xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+    overflow: hidden;
+  }
+
+  .logo-cloud-label {
+    margin-bottom: var(--space-xl);
+    text-align: center;
+  }
+
+  .logo-marquee-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .logo-marquee-wrapper::before,
+  .logo-marquee-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .logo-marquee-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--color-bg-secondary), transparent);
+  }
+
+  .logo-marquee-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--color-bg-secondary), transparent);
+  }
+
+  .logo-marquee-track {
+    display: flex;
+    gap: var(--space-2xl);
+    animation: logoMarquee 30s linear infinite;
+    width: max-content;
+    align-items: center;
+  }
+
+  @keyframes logoMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .logo-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--color-surface);
+    white-space: nowrap;
+    transition: border-color var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .logo-item:hover {
+    border-color: var(--color-cyan-border);
+  }
+
+  .logo-abbr {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-cyan);
+    letter-spacing: 0.05em;
+  }
+
+  .logo-name {
+    color: var(--color-text-secondary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo-marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+</style>

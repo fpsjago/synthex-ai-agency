@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader/SectionHeader.astro';
+import PricingTable from '../components/PricingTable/PricingTable.astro';
+import FAQAccordion from '../components/FAQAccordion/FAQAccordion.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const included = [
+  'Code ownership — all source code is yours',
+  'No vendor lock-in on models or infrastructure',
+  'Full documentation and knowledge transfer',
+  '90-day hypercare after deployment',
+  'Monthly performance reports',
+  'Secure, auditable AI systems',
+];
+---
+
+<BaseLayout
+  title="Pricing"
+  description="Transparent, outcome-based pricing for AI automation projects. Starter from $2k/mo, Growth from $5k/mo, Enterprise custom."
+>
+  <!-- Hero -->
+  <section class="section pricing-hero">
+    <div class="container">
+      <div class="pricing-hero-inner">
+        <div class="pricing-hero-content">
+          <span class="label text-cyan js-reveal" data-reveal="fade-up">Pricing</span>
+          <h1 class="display-2 js-reveal" data-reveal="fade-up" data-delay="0.1">
+            Simple, transparent<br />
+            <em class="pricing-em">pricing</em>
+          </h1>
+          <p class="body-lg text-muted js-reveal" data-reveal="fade-up" data-delay="0.2">
+            No surprise costs. No change orders for scope creep we didn't predict. Every tier includes full code ownership and a fixed monthly commitment.
+          </p>
+        </div>
+
+        <div class="pricing-included js-reveal" data-reveal="fade-up" data-delay="0.3">
+          <h3 class="heading-md">Included in every tier</h3>
+          <ul class="pricing-included-list">
+            {included.map((item) => (
+              <li class="pricing-included-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8l3.5 3.5L13 4" stroke="var(--color-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="body-sm">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Table -->
+  <section class="section">
+    <div class="container">
+      <PricingTable />
+    </div>
+  </section>
+
+  <!-- Enterprise callout -->
+  <section class="section-sm">
+    <div class="container">
+      <div class="enterprise-callout js-reveal" data-reveal="fade-up">
+        <div class="enterprise-callout-content">
+          <span class="enterprise-badge label text-green">Enterprise</span>
+          <h2 class="heading-xl">Need something beyond the standard tiers?</h2>
+          <p class="body-lg text-muted">
+            For teams deploying AI across multiple departments, requiring custom infrastructure, or operating in regulated industries — let's design a custom engagement.
+          </p>
+          <ul class="enterprise-features">
+            <li class="body-sm text-muted">Dedicated embedded engineer on your team</li>
+            <li class="body-sm text-muted">Custom SLAs and compliance documentation</li>
+            <li class="body-sm text-muted">On-premises / air-gapped deployment options</li>
+            <li class="body-sm text-muted">Custom model fine-tuning and IP ownership</li>
+            <li class="body-sm text-muted">Executive strategy advisory included</li>
+          </ul>
+        </div>
+        <a href={`${base}contact/`} class="btn btn-primary enterprise-cta" data-magnetic>
+          Talk to us about Enterprise
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-sm pricing-faq">
+    <div class="container faq-container">
+      <SectionHeader
+        label="Questions"
+        title="Pricing FAQ"
+        subtitle="Clear answers to the questions we get asked before every engagement."
+      />
+      <FAQAccordion />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pricing-hero {
+    padding-top: calc(var(--nav-height) + var(--space-4xl));
+    background: var(--color-bg);
+  }
+
+  .pricing-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: start;
+  }
+
+  .pricing-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .pricing-em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--color-cyan), var(--color-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .pricing-included {
+    padding: var(--space-2xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .pricing-included-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .pricing-included-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  /* Enterprise */
+  .enterprise-callout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-3xl);
+    align-items: center;
+    padding: var(--space-3xl);
+    background: linear-gradient(135deg, var(--color-green-dim), var(--color-surface));
+    border: 1px solid rgba(57, 255, 20, 0.3);
+    border-radius: var(--radius-xl);
+  }
+
+  .enterprise-callout-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .enterprise-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.25rem 0.75rem;
+    background: var(--color-green-dim);
+    border: 1px solid rgba(57, 255, 20, 0.3);
+    border-radius: var(--radius-full);
+    width: fit-content;
+  }
+
+  .enterprise-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .enterprise-features li::before {
+    content: '→ ';
+    color: var(--color-green);
+    font-weight: 700;
+  }
+
+  .enterprise-cta {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .pricing-faq {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq-container {
+    max-width: 860px;
+  }
+
+  @media (max-width: 1024px) {
+    .pricing-hero-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .enterprise-callout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initReveal() {
+    document.querySelectorAll<HTMLElement>('.js-reveal').forEach((el) => {
+      const delay = parseFloat(el.dataset.delay || '0');
+      gsap.fromTo(el,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+        }
+      );
+    });
+  }
+
+  initReveal();
+  document.addEventListener('astro:after-swap', initReveal);
+</script>
