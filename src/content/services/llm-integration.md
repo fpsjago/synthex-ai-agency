@@ -1,7 +1,7 @@
 ---
 title: "LLM Integration"
 description: "Embed the world's most capable language models directly into your products. We handle everything from prompt engineering and RAG architecture to fine-tuning and deployment at scale."
-icon: "🧠"
+icon: "llm"
 order: 2
 featured: true
 tags: ["LLM", "RAG", "fine-tuning", "embeddings", "product"]

@@ -4,6 +4,7 @@ import SectionHeader from '../../components/SectionHeader/SectionHeader.astro';
 import CaseStudyCard from '../../components/CaseStudyCard/CaseStudyCard.astro';
 import { getCollection } from 'astro:content';
 
+const base = import.meta.env.BASE_URL;
 const caseStudies = await getCollection('case-studies');
 
 // Get unique categories
@@ -68,7 +69,7 @@ const categories = ['All', ...new Set(caseStudies.map((cs) => cs.data.category))
           <h2 class="heading-xl">Ready to be our next case study?</h2>
           <p class="body-lg text-muted">Let's talk about what we can build together.</p>
         </div>
-        <a href="/contact/" class="btn btn-primary" data-magnetic>
+        <a href={`${base}contact/`} class="btn btn-primary" data-magnetic>
           Start a project
         </a>
       </div>

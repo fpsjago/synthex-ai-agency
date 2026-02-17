@@ -1,7 +1,7 @@
 ---
 title: "Data Pipelines"
 description: "Your AI is only as good as your data. We build robust ingestion, transformation, and enrichment pipelines that feed your models with clean, structured, high-quality inputs."
-icon: "🔄"
+icon: "pipeline"
 order: 3
 featured: false
 tags: ["data", "ETL", "pipeline", "infrastructure", "vector-db"]

@@ -1,0 +1,67 @@
+/* ============================================================
+   SYNTHEX — Color Skin Variants
+   Activate via data-skin attribute on <html>
+   ============================================================ */
+
+/* ─── Skin 1: Default (Electric Cyan + Neon Green) ─────────── */
+:root[data-skin="default"],
+:root:not([data-skin]) {
+  --skin-primary: #00D4FF;
+  --skin-primary-dim: rgba(0, 212, 255, 0.15);
+  --skin-primary-border: rgba(0, 212, 255, 0.3);
+  --skin-primary-shadow: 0 0 40px rgba(0, 212, 255, 0.15);
+  --skin-accent: #39FF14;
+  --skin-accent-dim: rgba(57, 255, 20, 0.12);
+
+  /* Mapped to globals */
+  --color-cyan: var(--skin-primary);
+  --color-cyan-dim: var(--skin-primary-dim);
+  --color-cyan-border: var(--skin-primary-border);
+  --shadow-cyan: var(--skin-primary-shadow);
+  --color-green: var(--skin-accent);
+  --color-green-dim: var(--skin-accent-dim);
+
+  [data-theme="light"] {
+    --color-cyan: #0099CC;
+    --color-cyan-dim: rgba(0, 153, 204, 0.1);
+    --color-cyan-border: rgba(0, 153, 204, 0.3);
+    --color-green: #1A8C00;
+    --color-green-dim: rgba(26, 140, 0, 0.1);
+  }
+}
+
+/* ─── Skin 2: Violet (Purple + Cyan) ───────────────────────── */
+:root[data-skin="violet"] {
+  --skin-primary: #7C3AED;
+  --skin-primary-dim: rgba(124, 58, 237, 0.15);
+  --skin-primary-border: rgba(124, 58, 237, 0.35);
+  --skin-primary-shadow: 0 0 40px rgba(124, 58, 237, 0.2);
+  --skin-accent: #06B6D4;
+  --skin-accent-dim: rgba(6, 182, 212, 0.12);
+
+  --color-cyan: var(--skin-primary);
+  --color-cyan-dim: var(--skin-primary-dim);
+  --color-cyan-border: var(--skin-primary-border);
+  --shadow-cyan: var(--skin-primary-shadow);
+  --color-green: var(--skin-accent);
+  --color-green-dim: var(--skin-accent-dim);
+  --shadow-green: 0 0 40px rgba(6, 182, 212, 0.2);
+}
+
+/* ─── Skin 3: Amber (Amber + Teal) ─────────────────────────── */
+:root[data-skin="amber"] {
+  --skin-primary: #F59E0B;
+  --skin-primary-dim: rgba(245, 158, 11, 0.15);
+  --skin-primary-border: rgba(245, 158, 11, 0.35);
+  --skin-primary-shadow: 0 0 40px rgba(245, 158, 11, 0.2);
+  --skin-accent: #0D9488;
+  --skin-accent-dim: rgba(13, 148, 136, 0.12);
+
+  --color-cyan: var(--skin-primary);
+  --color-cyan-dim: var(--skin-primary-dim);
+  --color-cyan-border: var(--skin-primary-border);
+  --shadow-cyan: var(--skin-primary-shadow);
+  --color-green: var(--skin-accent);
+  --color-green-dim: var(--skin-accent-dim);
+  --shadow-green: 0 0 40px rgba(13, 148, 136, 0.2);
+}

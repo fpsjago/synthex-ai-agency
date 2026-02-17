@@ -5,42 +5,42 @@ const base = import.meta.env.BASE_URL;
 
 const services = [
   {
-    icon: '⚡',
+    iconPath: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
     title: 'AI Workflow Automation',
     description: 'Transform repetitive operations into self-optimizing pipelines that adapt to your business logic.',
     href: `${base}services/`,
     tag: 'Most Popular',
   },
   {
-    icon: '🧠',
+    iconPath: 'M12 2a7 7 0 0 1 0 14m0-14a7 7 0 0 0 0 14m0-14v14M8 5.07A7 7 0 0 0 5.07 8M16 5.07A7 7 0 0 1 18.93 8M5.07 16A7 7 0 0 0 8 18.93M18.93 16A7 7 0 0 1 16 18.93',
     title: 'LLM Integration',
     description: 'Embed world-class language models into your products with RAG, fine-tuning, and production-grade deployment.',
     href: `${base}services/`,
     tag: null,
   },
   {
-    icon: '🔄',
+    iconPath: 'M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z',
     title: 'Data Pipelines',
     description: 'Clean, structured, high-quality data infrastructure that feeds your AI systems with what they need.',
     href: `${base}services/`,
     tag: null,
   },
   {
-    icon: '🎯',
+    iconPath: 'M2 20h20M6 20V10M12 20V4M18 20v-6',
     title: 'AI Strategy Consulting',
     description: 'Cut through the hype. Identify the highest-leverage AI opportunities and avoid costly mistakes.',
     href: `${base}services/`,
     tag: null,
   },
   {
-    icon: '🤖',
+    iconPath: 'M12 8V4H8M4 8h16v12H4V8zM8 12h8M8 16h5',
     title: 'Agent Development',
     description: 'Custom AI agents that reason, plan, and execute multi-step tasks with human-level judgment.',
     href: `${base}services/`,
     tag: null,
   },
   {
-    icon: '🔍',
+    iconPath: 'M21 21l-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0z',
     title: 'Process Mining',
     description: 'Discover automation opportunities hidden in your operational data using AI-powered analysis.',
     href: `${base}services/`,
@@ -70,7 +70,11 @@ const services = [
           {service.tag && (
             <span class="service-card-tag label text-green">{service.tag}</span>
           )}
-          <div class="service-card-icon">{service.icon}</div>
+          <div class="service-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d={service.iconPath}/>
+            </svg>
+          </div>
           <h3 class="service-card-title heading-md">{service.title}</h3>
           <p class="service-card-desc body-sm text-muted">{service.description}</p>
           <div class="service-card-arrow">
@@ -147,8 +151,21 @@ const services = [
   }
 
   .service-card-icon {
-    font-size: 2rem;
-    line-height: 1;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-cyan);
+    background: var(--color-cyan-dim);
+    border-radius: var(--radius-md);
+    padding: 0.375rem;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .service-card:hover .service-card-icon {
+    background: var(--color-cyan);
+    color: #0A0A0A;
   }
 
   .service-card-title {

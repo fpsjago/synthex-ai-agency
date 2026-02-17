@@ -1,7 +1,7 @@
 ---
 title: "AI Strategy Consulting"
 description: "Cut through the hype. We help executive teams identify the highest-leverage AI opportunities in their business, build implementation roadmaps, and avoid the costly mistakes most companies make."
-icon: "🎯"
+icon: "strategy"
 order: 4
 featured: false
 tags: ["strategy", "consulting", "roadmap", "executive", "ROI"]

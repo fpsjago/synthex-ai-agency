@@ -3,6 +3,8 @@
    Dark-first with light mode via [data-theme="light"]
    ============================================================ */
 
+@import './skins.css';
+
 /* CSS Custom Properties */
 :root {
   /* Colors — Dark Theme (default) */

@@ -62,7 +62,33 @@ const processSteps = [
             data-delay={String(i * 0.08)}
           >
             <div class="service-detail-header">
-              <span class="service-detail-icon">{service.data.icon}</span>
+              <span class="service-detail-icon" aria-hidden="true">
+                {service.data.icon === 'automation' && (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                  </svg>
+                )}
+                {service.data.icon === 'llm' && (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a10 10 0 0 1 0 20 10 10 0 0 1 0-20z"/><path d="M12 2v20M2 12h20"/>
+                  </svg>
+                )}
+                {service.data.icon === 'pipeline' && (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  </svg>
+                )}
+                {service.data.icon === 'strategy' && (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 20h20M6 20V10M12 20V4M18 20v-6"/>
+                  </svg>
+                )}
+                {!['automation','llm','pipeline','strategy'].includes(service.data.icon) && (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                  </svg>
+                )}
+              </span>
               <div>
                 <div class="service-detail-tags">
                   {service.data.tags.slice(0, 3).map((tag: string) => (

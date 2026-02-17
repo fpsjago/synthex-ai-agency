@@ -80,7 +80,11 @@
 
   <!-- Success message -->
   <div class="form-success" id="form-success" aria-live="polite" hidden>
-    <span class="form-success-icon">✓</span>
+    <span class="form-success-icon" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </span>
     <div>
       <p class="heading-md">Message sent!</p>
       <p class="body-sm text-muted">We'll get back to you within 24 hours.</p>

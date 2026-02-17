@@ -7,25 +7,25 @@ const base = import.meta.env.BASE_URL;
 
 const contactInfo = [
   {
-    icon: '📍',
+    icon: 'location',
     label: 'Headquarters',
     value: 'San Francisco, CA',
     sub: '340 Pine Street, Suite 800',
   },
   {
-    icon: '🗽',
+    icon: 'location',
     label: 'East Coast',
     value: 'New York, NY',
     sub: '350 5th Avenue, Suite 5000',
   },
   {
-    icon: '✉️',
+    icon: 'email',
     label: 'Email',
     value: 'hello@synthex.ai',
     sub: 'We reply within 24 hours',
   },
   {
-    icon: '📞',
+    icon: 'phone',
     label: 'Phone',
     value: '+1 (415) 800-0420',
     sub: 'Mon–Fri, 9am–6pm PST',
@@ -72,7 +72,23 @@ const contactInfo = [
           <div class="contact-info-cards">
             {contactInfo.map((info, i) => (
               <div class="contact-info-card js-reveal" data-reveal="fade-up" data-delay={String(i * 0.08)}>
-                <span class="contact-info-icon">{info.icon}</span>
+                <span class="contact-info-icon" aria-hidden="true">
+                  {info.icon === 'location' && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                    </svg>
+                  )}
+                  {info.icon === 'email' && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  )}
+                  {info.icon === 'phone' && (
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.64 12a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.53 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                  )}
+                </span>
                 <div>
                   <p class="label text-muted">{info.label}</p>
                   <p class="contact-info-value body-md">{info.value}</p>
@@ -85,7 +101,11 @@ const contactInfo = [
           <!-- Map placeholder -->
           <div class="contact-map js-reveal" data-reveal="fade-up" data-delay="0.4" aria-label="Office location map placeholder">
             <div class="contact-map-inner">
-              <div class="contact-map-pin" aria-hidden="true">📍</div>
+              <div class="contact-map-pin" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+              </div>
               <p class="body-sm text-muted">San Francisco, CA</p>
               <p class="body-sm text-muted">340 Pine Street</p>
             </div>

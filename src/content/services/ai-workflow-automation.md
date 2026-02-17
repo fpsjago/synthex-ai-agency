@@ -1,7 +1,7 @@
 ---
 title: "AI Workflow Automation"
 description: "Transform repetitive operations into intelligent, self-optimizing pipelines. We design end-to-end automation systems that adapt to your business logic using cutting-edge LLMs and agent frameworks."
-icon: "⚡"
+icon: "automation"
 order: 1
 featured: true
 tags: ["automation", "LLM", "agents", "operations"]
